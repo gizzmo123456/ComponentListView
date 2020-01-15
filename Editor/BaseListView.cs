@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
 using UnityEditor;
 
 
@@ -11,17 +12,17 @@ public class SceneComponentListView<T> where T : MonoBehaviour
 	// store all components in a dict where the key is the scene name.
 	private Dictionary<string, List<T>> sceneCompoents = new Dictionary<string, List<T>>();
 
-	public void GetComponentsFromObject( GameObject obj )
+	public void RetrieveComponentsFromObject( GameObject obj )
 	{
 		AddComponents( obj.scene.name, obj.GetComponentsInChildren<T>() );
 	}
 
-	public void GetComponentsFromScene( Scene scene )
+	public void RetrieveComponentsFromScene( Scene scene )
 	{
 		GameObject[] gameObjs = scene.GetRootGameObjects();
 
 		foreach ( GameObject go in gameObjs )
-			GetComponentsFromObject( go );
+			RetrieveComponentsFromObject( go );
 
 	}
 
