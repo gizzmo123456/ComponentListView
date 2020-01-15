@@ -27,6 +27,7 @@ public class SceneComponentListView<T> where T : MonoBehaviour
 
     private void AddComponents( string key, T[] components)
     {
+        if ( components.Length == 0 ) return; // nothing to add!
         // add the key if it does not exist
         if ( !sceneCompoents.ContainsKey(key) )
             sceneCompoents.Add( key, new List<T>() );
