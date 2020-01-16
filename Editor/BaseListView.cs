@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -12,6 +13,14 @@ using UnityEditor;
 public abstract class BaseListView<T>
 {
 	private Dictionary<string, List<T>> items = new Dictionary<string, List<T>>();
+	public int GroupCount => items.Count;
+
+	public int GetItemCount( string groupName )
+	{
+		if ( !items.ContainsKey( groupName ) ) return 0;
+
+		return items[ groupName ].Count;
+	}
 
 	protected void AddComponents ( string groupName, T[] components )
 	{
@@ -91,8 +100,21 @@ public class ScriptableObjectListView<T> : BaseListView<T> where T : ScriptableO
 	{
 		// Find all assets of Type Name
 		string[] assetGUIDs = AssetDatabase.FindAssets( string.Format( "t:{0}", typeof( T ).ToString() ) );
-		
-		AddComponents()
+
+		foreach ( string guid in assetGUIDs )
+		{
+			string filePath = AssetDatabase.GUIDToAssetPath(guid);
+			// remove the file from the path.
+			//new Regex( @"\b([/][\w\s]*[.]{1}asset+)\b" );		// << Reg ex to get asset name.
+			Regex rx = new Regex( @"([\w\d \t\/]*)([\/])" );    // Regex to get path without file name
+			Match match = rx.Match( filePath );
+
+			string path = match.Success ? match.ToString() : filePath;	// fall back on the full file path if theres an error.
+
+			AddComponent( path, AssetDatabase.LoadAssetAtPath<T>(filePath) );
+			
+		}
+
 	}
 
 }
