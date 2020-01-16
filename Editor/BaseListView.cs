@@ -13,7 +13,7 @@ public abstract class BaseListView<T>
 {
 	private Dictionary<string, List<T>> items = new Dictionary<string, List<T>>();
 
-	private void AddComponents ( string groupName, T[] components )
+	protected void AddComponents ( string groupName, T[] components )
 	{
 		if ( components.Length == 0 ) return; // nothing to add!
 											  // add the key if it does not exist
@@ -61,9 +61,6 @@ public abstract class BaseListView<T>
 public class SceneComponentListView<T> : BaseListView<T> where T : MonoBehaviour
 {
 
-	// store all components in a dict where the key is the scene name.
-	private Dictionary<string, List<T>> items = new Dictionary<string, List<T>>();
-
 	public void RetrieveComponentsFromObject( GameObject obj )
 	{
 		AddComponents( obj.scene.name, obj.GetComponentsInChildren<T>() );
@@ -75,17 +72,6 @@ public class SceneComponentListView<T> : BaseListView<T> where T : MonoBehaviour
 
 		foreach ( GameObject go in gameObjs )
 			RetrieveComponentsFromObject( go );
-
-	}
-
-	private void AddComponents( string key, T[] components)
-	{
-		if ( components.Length == 0 ) return; // nothing to add!
-		// add the key if it does not exist
-		if ( !items.ContainsKey(key) )
-			items.Add( key, new List<T>() );
-
-		items[ key ].AddRange( components );
 
 	}
 
