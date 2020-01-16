@@ -24,6 +24,14 @@ public abstract class BaseListView<T>
 
 	}
 
+	protected void AddComponent( string groupName, T component )
+	{
+		if ( !items.ContainsKey( groupName ) )
+			items.Add( groupName, new List<T>() );
+
+		items[ groupName ].Add( component );
+	}
+
 	public T[] GetComponentsFromGroup ( string groupName )
 	{
 		if ( !items.ContainsKey( groupName ) )
@@ -73,6 +81,18 @@ public class SceneComponentListView<T> : BaseListView<T> where T : MonoBehaviour
 		foreach ( GameObject go in gameObjs )
 			RetrieveComponentsFromObject( go );
 
+	}
+
+}
+
+public class ScriptableObjectListView<T> : BaseListView<T> where T : ScriptableObject
+{
+	public void RetrieveScriptablesFromTypeName( )
+	{
+		// Find all assets of Type Name
+		string[] assetGUIDs = AssetDatabase.FindAssets( string.Format( "t:{0}", typeof( T ).ToString() ) );
+		
+		AddComponents()
 	}
 
 }
