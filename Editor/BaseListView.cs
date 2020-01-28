@@ -59,6 +59,16 @@ public abstract class BaseListView<T>
 		return items.ContainsKey( sceneName );
 	}
 
+	public void RemoveGroup ( string groupName )
+	{
+		if ( !items.ContainsKey( groupName ) )
+			return;
+
+		items.Remove( groupName );
+
+		return;
+	}
+
 	public void ClearGroupItems ( string sceneName )
 	{
 		if ( !items.ContainsKey( sceneName ) ) return;
@@ -91,6 +101,12 @@ public class SceneComponentListView<T> : BaseListView<T> where T : MonoBehaviour
 			RetrieveComponentsFromObject( go );
 
 	}
+
+	public void RemoveGroup( Scene sceneAsset )
+	{
+		RemoveGroup( sceneAsset.name );
+	}
+
 
 }
 
