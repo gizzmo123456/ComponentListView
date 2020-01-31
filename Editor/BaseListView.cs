@@ -145,7 +145,7 @@ public class MonoBehaviourListView<T> : BaseListView<System.Type> where T : Mono
 		AddComponent( type.ToString(), type );
 
 		foreach ( System.Type t in type.Assembly.GetTypes() )
-			if ( t.IsSubclassOf( type ) )
+			if ( t.IsSubclassOf( type ) && !t.IsAbstract )
 				AddComponent(type.ToString(), t);
 		
 	}
