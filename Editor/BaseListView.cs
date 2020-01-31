@@ -135,13 +135,13 @@ public class ScriptableObjectListView<T> : BaseListView<T> where T : ScriptableO
 
 }
 
-public class MonoBehaviourListView<T> : BaseListView<System.Type> where T : MonoBehaviour
+public class MonoBehaviourListView : BaseListView<System.Type>
 {
 
-	public void RetrieveMonoBehaviours()
+	public void RetrieveMonoBehaviours<Group>() where Group : MonoBehaviour
 	{
 
-		System.Type type = typeof( T );
+		System.Type type = typeof( Group );
 		AddComponent( type.ToString(), type );
 
 		foreach ( System.Type t in type.Assembly.GetTypes() )
