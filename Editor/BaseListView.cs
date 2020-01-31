@@ -142,7 +142,9 @@ public class MonoBehaviourListView : BaseListView<System.Type>
 	{
 
 		System.Type type = typeof( Group );
-		AddComponent( type.ToString(), type );
+
+        if ( !type.IsAbstract )
+		    AddComponent( type.ToString(), type );
 
 		foreach ( System.Type t in type.Assembly.GetTypes() )
 			if ( t.IsSubclassOf( type ) && !t.IsAbstract )
