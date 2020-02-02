@@ -29,7 +29,9 @@ public abstract class BaseListView<T>
 		if ( !items.ContainsKey( groupName ) )
 			items.Add( groupName, new List<T>() );
 
-		items[ groupName ].AddRange( components );
+		foreach ( T comp in components )
+			if ( !items[ groupName ].Contains( comp ) )
+				items[ groupName ].Add( comp );
 
 	}
 
@@ -38,7 +40,8 @@ public abstract class BaseListView<T>
 		if ( !items.ContainsKey( groupName ) )
 			items.Add( groupName, new List<T>() );
 
-		items[ groupName ].Add( component );
+		if ( !items[ groupName ].Contains( component ) )
+			items[ groupName ].Add( component );
 	}
 
 	public T[] GetComponentsFromGroup ( string groupName )
