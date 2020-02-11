@@ -12,7 +12,7 @@ using UnityEditor;
 /// <typeparam name="T"></typeparam>
 public abstract class BaseListView<T>
 {
-	private Dictionary<string, List<T>> items = new Dictionary<string, List<T>>();
+	protected Dictionary<string, List<T>> items = new Dictionary<string, List<T>>();
 	public int GroupCount => items.Count;
 
 	public int GetItemCount( string groupName )
